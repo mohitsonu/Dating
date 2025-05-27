@@ -2540,11 +2540,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\.net\\Dating\\API\\API.csproj",
+      "projectUniqueName": "E:\\.net\\DatingApp\\API\\API.csproj",
       "projectName": "API",
-      "projectPath": "E:\\.net\\Dating\\API\\API.csproj",
+      "projectPath": "E:\\.net\\DatingApp\\API\\API.csproj",
       "packagesPath": "C:\\Users\\mohit\\.nuget\\packages\\",
-      "outputPath": "E:\\.net\\Dating\\API\\obj\\",
+      "outputPath": "E:\\.net\\DatingApp\\API\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\mohit\\AppData\\Roaming\\NuGet\\NuGet.Config",
