@@ -244,3 +244,11 @@ E:\.net\Dating\api\obj\Debug\net8.0\scopedcss\bundle\API.styles.css
 E:\.net\Dating\api\obj\Debug\net8.0\API.csproj.Up2Date
 E:\.net\Dating\api\obj\Debug\net8.0\API.genruntimeconfig.cache
 E:\.net\Dating\api\obj\Debug\net8.0\ref\API.dll
+E:\.net\Dating\api\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+E:\.net\Dating\api\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+E:\.net\Dating\api\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+E:\.net\Dating\api\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+E:\.net\Dating\api\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+E:\.net\Dating\api\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+E:\.net\Dating\api\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+E:\.net\Dating\api\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
