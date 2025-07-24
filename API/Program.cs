@@ -17,23 +17,74 @@ builder.Services.AddIdentityServices(builder.Configuration);
 var connString = "";
 if (builder.Environment.IsDevelopment())
     connString = builder.Configuration.GetConnectionString("DefaultConnection");
+// else
+// {
+//     // Use connection string provided at runtime by FlyIO.
+//     var connUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+
+//     // Parse connection URL to connection string for Npgsql
+//     connUrl = connUrl.Replace("postgres://", string.Empty);
+//     var pgUserPass = connUrl.Split("@")[0];
+//     var pgHostPortDb = connUrl.Split("@")[1];
+//     var pgHostPort = pgHostPortDb.Split("/")[0];
+//     var pgDb = pgHostPortDb.Split("/")[1];
+//     var pgUser = pgUserPass.Split(":")[0];
+//     var pgPass = pgUserPass.Split(":")[1];
+//     var pgHost = pgHostPort.Split(":")[0];
+//     var pgPort = pgHostPort.Split(":")[1];
+
+//     connString = $"Server={pgHost};Port={pgPort};User Id={pgUser};Password={pgPass};Database={pgDb};";
+// }
 else
 {
-    // Use connection string provided at runtime by FlyIO.
     var connUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
 
-    // Parse connection URL to connection string for Npgsql
-    connUrl = connUrl.Replace("postgres://", string.Empty);
-    var pgUserPass = connUrl.Split("@")[0];
-    var pgHostPortDb = connUrl.Split("@")[1];
-    var pgHostPort = pgHostPortDb.Split("/")[0];
-    var pgDb = pgHostPortDb.Split("/")[1];
-    var pgUser = pgUserPass.Split(":")[0];
-    var pgPass = pgUserPass.Split(":")[1];
-    var pgHost = pgHostPort.Split(":")[0];
-    var pgPort = pgHostPort.Split(":")[1];
+    if (string.IsNullOrEmpty(connUrl))
+    {
+        throw new InvalidOperationException("DATABASE_URL environment variable is missing!");
+    }
 
-    connString = $"Server={pgHost};Port={pgPort};User Id={pgUser};Password={pgPass};Database={pgDb};";
+    try
+    {
+        // Remove protocol
+        connUrl = connUrl.Replace("postgres://", string.Empty);
+
+        var atSplit = connUrl.Split("@");
+        if (atSplit.Length != 2)
+            throw new FormatException("DATABASE_URL format is invalid (missing '@').");
+
+        var pgUserPass = atSplit[0];
+        var pgHostPortDb = atSplit[1];
+
+        var userPassSplit = pgUserPass.Split(":");
+        if (userPassSplit.Length != 2)
+            throw new FormatException("DATABASE_URL user/pass format is invalid.");
+
+        var pgUser = userPassSplit[0];
+        var pgPass = userPassSplit[1];
+
+        var hostPortDbSplit = pgHostPortDb.Split("/");
+        if (hostPortDbSplit.Length < 2)
+            throw new FormatException("DATABASE_URL host/port/db format is invalid.");
+
+        var pgHostPort = hostPortDbSplit[0];
+        var pgDb = hostPortDbSplit[1];
+
+        var hostPortSplit = pgHostPort.Split(":");
+        if (hostPortSplit.Length != 2)
+            throw new FormatException("DATABASE_URL host/port format is invalid.");
+
+        var pgHost = hostPortSplit[0];
+        var pgPort = hostPortSplit[1];
+
+        // Compose final connection string
+        connString = $"Server={pgHost};Port={pgPort};User Id={pgUser};Password={pgPass};Database={pgDb};Ssl Mode=Require;Trust Server Certificate=true;";
+
+    }
+    catch (Exception ex)
+    {
+        throw new InvalidOperationException($"Failed to parse DATABASE_URL: {ex.Message}");
+    }
 }
 builder.Services.AddDbContext<DataContext>(opt =>
 {
