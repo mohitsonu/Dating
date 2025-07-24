@@ -47,39 +47,43 @@ else
     try
     {
         // Remove protocol
-        connUrl = connUrl.Replace("postgres://", string.Empty);
+        connUrl = connUrl.Replace("postgres://", string.Empty)
+                         .Replace("postgresql://", string.Empty);
 
-        var atSplit = connUrl.Split("@");
+        // Split at '@'
+        var atSplit = connUrl.Split('@');
         if (atSplit.Length != 2)
             throw new FormatException("DATABASE_URL format is invalid (missing '@').");
 
         var pgUserPass = atSplit[0];
         var pgHostPortDb = atSplit[1];
 
-        var userPassSplit = pgUserPass.Split(":");
-        if (userPassSplit.Length != 2)
+        // Split user and password
+        var userPassSplit = pgUserPass.Split(':');
+        if (userPassSplit.Length < 2)
             throw new FormatException("DATABASE_URL user/pass format is invalid.");
 
         var pgUser = userPassSplit[0];
         var pgPass = userPassSplit[1];
 
-        var hostPortDbSplit = pgHostPortDb.Split("/");
-        if (hostPortDbSplit.Length < 2)
+        // Get host, port, db, and options
+        var slashSplit = pgHostPortDb.Split('/');
+        if (slashSplit.Length < 2)
             throw new FormatException("DATABASE_URL host/port/db format is invalid.");
 
-        var pgHostPort = hostPortDbSplit[0];
-        var pgDb = hostPortDbSplit[1];
+        var hostPort = slashSplit[0];
+        var dbAndParams = slashSplit[1];
 
-        var hostPortSplit = pgHostPort.Split(":");
-        if (hostPortSplit.Length != 2)
-            throw new FormatException("DATABASE_URL host/port format is invalid.");
+        // Separate db name from params
+        var dbSplit = dbAndParams.Split('?');
+        var pgDb = dbSplit[0];
 
+        var hostPortSplit = hostPort.Split(':');
         var pgHost = hostPortSplit[0];
-        var pgPort = hostPortSplit[1];
+        var pgPort = hostPortSplit.Length > 1 ? hostPortSplit[1] : "5432"; // Default Postgres port
 
         // Compose final connection string
         connString = $"Server={pgHost};Port={pgPort};User Id={pgUser};Password={pgPass};Database={pgDb};Ssl Mode=Require;Trust Server Certificate=true;";
-
     }
     catch (Exception ex)
     {
