@@ -31,18 +31,6 @@ You can try the live application here: **[https://dating-lb7n.onrender.com/](htt
 
 *(You can add or remove features here as you build them out!)*
 
-## 📸 Screenshots
-
-*A few screenshots of the application in action. You should replace these placeholders with your own screenshots!*
-
-| Login Page | Member List |
-| :---: | :---: |
-| ![Login Page Placeholder](https://via.placeholder.com/400x300.png?text=Login+Page) | ![Member List Placeholder](https://via.placeholder.com/400x300.png?text=Member+List) |
-
-| Member Profile | Chat Interface |
-| :---: | :---: |
-| ![Member Profile Placeholder](https://via.placeholder.com/400x300.png?text=Member+Profile) | ![Chat Interface Placeholder](https://via.placeholder.com/400x300.png?text=Chat+Interface) |
-
 ## Technology Stack
 
 ### Backend
