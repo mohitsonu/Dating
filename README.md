@@ -45,7 +45,7 @@ Here are some of the core features of the application.
 
 -   **Framework:** ASP.NET Core 7
 -   **Language:** C#
--   **Database:** *(e.g., SQLite, SQL Server - please specify which one you are using)*
+-   **Database:** *(e.g., SQLite, SQL Server)*
 -   **Authentication:** JSON Web Tokens (JWT)
 
 ### Frontend
