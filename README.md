@@ -45,7 +45,7 @@ Here are some of the core features of the application.
 
 -   **Framework:** ASP.NET Core 7
 -   **Language:** C#
--   **Database:** *(e.g., SQLite, SQL Server)*
+-   **Database:** PostgreSQL, hosted on [Neon](https://neon.tech/)
 -   **Authentication:** JSON Web Tokens (JWT)
 
 ### Frontend
